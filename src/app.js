@@ -16,8 +16,12 @@ const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 
 const apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 const sessionIds = new Map();
+ var imageUrl = "https://placekitten.com/" + Number(values[1]) + "/" + Number(values[2]);
+            
+          
 
 function processEvent(event) {
+    
     var sender = event.sender.id.toString();
     var name = event.sender.name.toString();
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
@@ -44,8 +48,30 @@ function processEvent(event) {
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
                     if (!Array.isArray(responseData.facebook)) {
                         try {
+                              var message1 = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "Kitten",
+                            "subtitle": "Cute kitten picture",
+                            "image_url": imageUrl ,
+                            "buttons": [{
+                                "type": "web_url",
+                                "url": imageUrl,
+                                "title": "Show kitten"
+                                }, {
+                                "type": "postback",
+                                "title": "I like this",
+                                "payload": "User " + recipientId + " likes kitten " + imageUrl,
+                            }]
+                        }]
+                    }
+                }
+            };
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, "Echo "+ name +" echo"+ responseData.facebook);
+                            sendFBMessage(sender,  message1);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -58,7 +84,7 @@ function processEvent(event) {
                                 }
                                 else {
                                     console.log('Response as formatted message');
-                                    sendFBMessage(sender, "Echo "+ name +"echo"+ facebookMessage, callback);
+                                    sendFBMessage(sender, message1, callback);
                                 }
                             } catch (err) {
                                 sendFBMessage(sender, {text: err.message}, callback);
@@ -72,7 +98,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: "Echo "+ name +"echo"+ textPart}, callback);
+                        sendFBMessage(sender, {text: message1}, callback);
                     });
                 }
 
