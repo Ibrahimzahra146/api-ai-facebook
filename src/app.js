@@ -16,13 +16,10 @@ const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 
 const apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 const sessionIds = new Map();
-            
-          
 
 function processEvent(event) {
-    
     var sender = event.sender.id.toString();
-    var name = event.sender.name.toString();
+
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
         var text = event.message ? event.message.text : event.postback.payload;
         // Handle a text message from this sender
@@ -43,35 +40,36 @@ function processEvent(event) {
                 let responseText = response.result.fulfillment.speech;
                 let responseData = response.result.fulfillment.data;
                 let action = response.result.action;
- var imageUrl = "https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD";
-    var message1 = {
-                "attachment": {
-                    "type": "template",
-                    "payload": {
-                        "template_type": "generic",
-                        "elements": [{
-                            "title": "Kitten",
-                            "subtitle": "Cute kitten picture",
-                            "image_url": imageUrl ,
-                            "buttons": [{
-                                "type": "web_url",
-                                "url": imageUrl,
-                                "title": "Show kitten"
-                                }, {
-                                "type": "postback",
-                                "title": "I like this",
-                                "payload": "User " + recipientId + " likes kitten " + imageUrl,
-                            }]
-                        }]
-                    }
-                }
-            };
-                
+var mess= "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "elements": [
+          {
+            "title": "Kitten",
+            "subtitle": "Cute kitten picture",
+            "image_url": "https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD",
+            "buttons": [
+              {
+                "type": "web_url",
+                "url": "https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD",
+                "title": "Show kitten"
+              },
+              {
+                "type": "postback",
+                "title": "I like this",
+                "payload": "User  likes kitten "
+              }
+            ]
+          }
+        ]
+      }
+    };
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
                     if (!Array.isArray(responseData.facebook)) {
                         try {
-                                      console.log('Response as formatted message');
-                            sendFBMessage(sender,  message1);
+                            console.log('Response as formatted message');
+                            sendFBMessage(sender, mess);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -84,7 +82,7 @@ function processEvent(event) {
                                 }
                                 else {
                                     console.log('Response as formatted message');
-                                    sendFBMessage(sender, message1, callback);
+                                    sendFBMessage(sender, mess, callback);
                                 }
                             } catch (err) {
                                 sendFBMessage(sender, {text: err.message}, callback);
@@ -98,7 +96,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: message1}, callback);
+                        sendFBMessage(sender, {text:mess}, callback);
                     });
                 }
 
