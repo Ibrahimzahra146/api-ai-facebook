@@ -69,7 +69,7 @@ var mess= "attachment": {
                     if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, mess);
+                            sendFBMessage(sender, event.mess.text);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -82,7 +82,7 @@ var mess= "attachment": {
                                 }
                                 else {
                                     console.log('Response as formatted message');
-                                    sendFBMessage(sender, mess, callback);
+                                    sendFBMessage(sender, event.mess.text, callback);
                                 }
                             } catch (err) {
                                 sendFBMessage(sender, {text: err.message}, callback);
@@ -96,7 +96,7 @@ var mess= "attachment": {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text:mess}, callback);
+                        sendFBMessage(sender, {text:event.mess.text}, callback);
                     });
                 }
 
