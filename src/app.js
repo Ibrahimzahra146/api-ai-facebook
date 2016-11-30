@@ -40,36 +40,12 @@ function processEvent(event) {
                 let responseText = response.result.fulfillment.speech;
                 let responseData = response.result.fulfillment.data;
                 let action = response.result.action;
-var mess= "attachment": {
-      "type": "template",
-      "payload": {
-        "template_type": "generic",
-        "elements": [
-          {
-            "title": "Kitten",
-            "subtitle": "Cute kitten picture",
-            "image_url": "https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD",
-            "buttons": [
-              {
-                "type": "web_url",
-                "url": "https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD",
-                "title": "Show kitten"
-              },
-              {
-                "type": "postback",
-                "title": "I like this",
-                "payload": "User  likes kitten "
-              }
-            ]
-          }
-        ]
-      }
-    };
+
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
                     if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, event.mess.text);
+                            sendFBMessage(sender, "Yessss "+responseData.facebook);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -82,7 +58,7 @@ var mess= "attachment": {
                                 }
                                 else {
                                     console.log('Response as formatted message');
-                                    sendFBMessage(sender, event.mess.text, callback);
+                                    sendFBMessage(sender, facebookMessage, callback);
                                 }
                             } catch (err) {
                                 sendFBMessage(sender, {text: err.message}, callback);
@@ -96,7 +72,7 @@ var mess= "attachment": {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text:event.mess.text}, callback);
+                        sendFBMessage(sender, {text: textPart}, callback);
                     });
                 }
 
