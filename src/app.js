@@ -16,7 +16,6 @@ const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 
 const apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 const sessionIds = new Map();
- var imageUrl = "https://placekitten.com/" + Number(values[1]) + "/" + Number(values[2]);
             
           
 
@@ -44,11 +43,8 @@ function processEvent(event) {
                 let responseText = response.result.fulfillment.speech;
                 let responseData = response.result.fulfillment.data;
                 let action = response.result.action;
-
-                if (isDefined(responseData) && isDefined(responseData.facebook)) {
-                    if (!Array.isArray(responseData.facebook)) {
-                        try {
-                              var message1 = {
+ var imageUrl = "https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD";
+    var message1 = {
                 "attachment": {
                     "type": "template",
                     "payload": {
@@ -70,7 +66,11 @@ function processEvent(event) {
                     }
                 }
             };
-                            console.log('Response as formatted message');
+                
+                if (isDefined(responseData) && isDefined(responseData.facebook)) {
+                    if (!Array.isArray(responseData.facebook)) {
+                        try {
+                                      console.log('Response as formatted message');
                             sendFBMessage(sender,  message1);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
