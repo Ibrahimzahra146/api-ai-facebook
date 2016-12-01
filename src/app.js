@@ -45,7 +45,31 @@ function processEvent(event) {
                     if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            richMessage(sender, "Yessss "+responseData.facebook);
+                            var imageUrl = "https://scontent-fra3-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD";
+            
+            message1 = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "Kitten",
+                            "subtitle": "Cute kitten picture",
+                            "image_url": imageUrl ,
+                            "buttons": [{
+                                "type": "web_url",
+                                "url": imageUrl,
+                                "title": "Show kitten"
+                                }, {
+                                "type": "postback",
+                                "title": "I like this",
+                                "payload": "User " + sender + " likes kitten " + imageUrl,
+                            }]
+                        }]
+                    }
+                }
+            };
+                            sendFBMessage(sender, message1);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -57,8 +81,32 @@ function processEvent(event) {
                                     sendFBSenderAction(sender, facebookMessage.sender_action, callback);
                                 }
                                 else {
+                                     var imageUrl = "https://scontent-fra3-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD" ;
+            
+            message1 = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "Kitten",
+                            "subtitle": "Cute kitten picture",
+                            "image_url": imageUrl ,
+                            "buttons": [{
+                                "type": "web_url",
+                                "url": imageUrl,
+                                "title": "Show kitten"
+                                }, {
+                                "type": "postback",
+                                "title": "I like this",
+                                "payload": "User " + sender + " likes kitten " + imageUrl,
+                            }]
+                        }]
+                    }
+                }
+            };
                                     console.log('Response as formatted message');
-                                    richMessage(sender, facebookMessage, callback);
+                                    sendFBMessage(sender, message1, callback);
                                 }
                             } catch (err) {
                                 sendFBMessage(sender, {text: err.message}, callback);
@@ -70,9 +118,32 @@ function processEvent(event) {
                     // facebook API limit for text length is 320,
                     // so we must split message if needed
                     var splittedText = splitResponse(responseText);
-
+ var imageUrl = "https://scontent-fra3-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD" ;
+            
+            message1 = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "Kitten",
+                            "subtitle": "Cute kitten picture",
+                            "image_url": imageUrl ,
+                            "buttons": [{
+                                "type": "web_url",
+                                "url": imageUrl,
+                                "title": "Show kitten"
+                                }, {
+                                "type": "postback",
+                                "title": "I like this",
+                                "payload": "User " + sender + " likes kitten " + imageUrl,
+                            }]
+                        }]
+                    }
+                }
+            };
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        richMessage(sender, {text: textPart}, callback);
+                        sendFBMessage(sender, {text: message1}, callback);
                     });
                 }
 
@@ -190,43 +261,6 @@ function isDefined(obj) {
 
     return obj != null;
 }
-// send rich message with kitten
-function richMessage(recipientId, text,callback) {
-    
-  
-    
-            
-            var imageUrl = "https://scontent-fra3-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD";
-            
-            message = {
-                "attachment": {
-                    "type": "template",
-                    "payload": {
-                        "template_type": "generic",
-                        "elements": [{
-                            "title": "Kitten",
-                            "subtitle": "Cute kitten picture",
-                            "image_url": imageUrl ,
-                            "buttons": [{
-                                "type": "web_url",
-                                "url": imageUrl,
-                                "title": "Show kitten"
-                                }, {
-                                "type": "postback",
-                                "title": "I like this",
-                                "payload": "User " + recipientId + " likes kitten " + imageUrl,
-                            }]
-                        }]
-                    }
-                }
-            };
-    
-            sendFBMessage(recipientId, message,callback);
-            
-            return true;
-        
-        
-    }
 
 const app = express();
 
