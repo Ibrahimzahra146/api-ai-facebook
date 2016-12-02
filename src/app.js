@@ -20,10 +20,10 @@ const sessionIds = new Map();
 function processEvent(event) {
     var sender = event.sender.id.toString();
 
-    if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
+    if ((event.message && event.message.text) || (event.postback && event.postback.payload)||event.message.attachments) {
         var text = event.message ? event.message.text : event.postback.payload;
         // Handle a text message from this sender
-
+        var imageUrl=event.message.payload.url;
         if (!sessionIds.has(sender)) {
             sessionIds.set(sender, uuid.v1());
         }
@@ -45,7 +45,7 @@ function processEvent(event) {
                     if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, responseData.facebook);
+                            sendFBMessage(sender, imageUrl);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -58,7 +58,8 @@ function processEvent(event) {
                                 }
                                 else {
                                     console.log('Response as formatted message');
-                                    sendFBMessage(sender, facebookMessage, callback);
+                                    sendFBMessage(sender, imageUrl
+                                        , callback);
                                 }
                             } catch (err) {
                                 sendFBMessage(sender, {text: err.message}, callback);
@@ -72,7 +73,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: textPart}, callback);
+                        sendFBMessage(sender, {text: imageUrl}, callback);
                     });
                 }
 
@@ -214,6 +215,8 @@ app.post('/webhook/', (req, res) => {
         if (data.entry) {
             let entries = data.entry;
             entries.forEach((entry) => {
+
+
                 let messaging_events = entry.messaging;
                 if (messaging_events) {
                     messaging_events.forEach((event) => {
