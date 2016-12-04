@@ -24,7 +24,8 @@ var mess1="false";
         if(event.message.attachments){
         mess1="true";
         }
-        var text = event.message ? event.message.text : event.postback.payload;
+        //var text = event.message ? event.message.text : event.postback.payload;
+        var text="how are you";
         // Handle a text message from this sender
        
         if (!sessionIds.has(sender)) {
