@@ -20,9 +20,13 @@ const sessionIds = new Map();
 function processEvent(event) {
     var sender = event.sender.id.toString();
 var mess1="false";
+var imageUrl="nth";
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)||event.message.attachments) {
         if(event.message.attachments){
         mess1="true";
+        imageUrl=event.message.attachments.payload.url;
+        imageUrl=imageUrl.toString();
+
         }
         //var text = event.message ? event.message.text : event.postback.payload;
         var text="how are you";
@@ -49,7 +53,7 @@ var mess1="false";
                     if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, mess1+"heyyyy!");
+                            sendFBMessage(sender, mess1+"heyyyy!"+imageUrl);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -62,7 +66,7 @@ var mess1="false";
                                 }
                                 else {
                                     console.log('Response as formatted message');
-                                    sendFBMessage(sender, mess1+"heyyyy!", callback);
+                                    sendFBMessage(sender, mess1+"heyyyy!"+imageUrl, callback);
                                 }
                             } catch (err) {
                                 sendFBMessage(sender, {text: err.message}, callback);
@@ -76,7 +80,7 @@ var mess1="false";
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: mess1+"heyyyy!"}, callback);
+                        sendFBMessage(sender, {text: mess1+"heyyyy!"+imageUrl}, callback);
                     });
                 }
 
