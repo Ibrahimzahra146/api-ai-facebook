@@ -25,7 +25,7 @@ var imageUrl1="noo";
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)||event.message.attachments) {
         if(event.message.attachments){
         mess1="true";
-        imageUrl=event.message.attachments.payload.url;
+        imageUrl=event.message.attachments[0].payload.url;
        imageUrl1="ddd";
 
         }
@@ -54,7 +54,7 @@ var imageUrl1="noo";
                     if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, mess1+"heyyyy!"+imageUrl1);
+                            sendFBMessage(sender, mess1+"heyyyy!"+imageUrl);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -67,7 +67,7 @@ var imageUrl1="noo";
                                 }
                                 else {
                                     console.log('Response as formatted message');
-                                    sendFBMessage(sender, mess1+"heyyyy!"+imageUrl1, callback);
+                                    sendFBMessage(sender, mess1+"heyyyy!"+imageUrl, callback);
                                 }
                             } catch (err) {
                                 sendFBMessage(sender, {text: err.message}, callback);
@@ -81,7 +81,7 @@ var imageUrl1="noo";
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: mess1+"heyyyy!"+imageUrl1}, callback);
+                        sendFBMessage(sender, {text: mess1+"heyyyy!"+imageUrl}, callback);
                     });
                 }
 
