@@ -25,7 +25,7 @@ var imageUrl="nth";
         if(event.message.attachments){
         mess1="true";
         imageUrl=event.message.attachments.payload.url;
-        imageUrl=imageUrl.toString();
+       imageUrl1="ddd";
 
         }
         //var text = event.message ? event.message.text : event.postback.payload;
@@ -53,7 +53,7 @@ var imageUrl="nth";
                     if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, mess1+"heyyyy!"+imageUrl);
+                            sendFBMessage(sender, mess1+"heyyyy!"+imageUrl1);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -66,7 +66,7 @@ var imageUrl="nth";
                                 }
                                 else {
                                     console.log('Response as formatted message');
-                                    sendFBMessage(sender, mess1+"heyyyy!"+imageUrl, callback);
+                                    sendFBMessage(sender, mess1+"heyyyy!"+imageUrl1, callback);
                                 }
                             } catch (err) {
                                 sendFBMessage(sender, {text: err.message}, callback);
@@ -80,7 +80,7 @@ var imageUrl="nth";
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: mess1+"heyyyy!"+imageUrl}, callback);
+                        sendFBMessage(sender, {text: mess1+"heyyyy!"+imageUrl1}, callback);
                     });
                 }
 
