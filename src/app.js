@@ -19,11 +19,14 @@ const sessionIds = new Map();
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
-
+var mess1="false";
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)||event.message.attachments) {
+        if(event.message.attachments){
+        mess1="true";
+        }
         var text = event.message ? event.message.text : event.postback.payload;
         // Handle a text message from this sender
-        var imageUrl=event.message.payload.url;
+       
         if (!sessionIds.has(sender)) {
             sessionIds.set(sender, uuid.v1());
         }
@@ -45,7 +48,7 @@ function processEvent(event) {
                     if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, imageUrl);
+                            sendFBMessage(sender, mess1+"heyyyy!");
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -58,8 +61,7 @@ function processEvent(event) {
                                 }
                                 else {
                                     console.log('Response as formatted message');
-                                    sendFBMessage(sender, imageUrl
-                                        , callback);
+                                    sendFBMessage(sender, mess1+"heyyyy!", callback);
                                 }
                             } catch (err) {
                                 sendFBMessage(sender, {text: err.message}, callback);
@@ -73,7 +75,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: imageUrl}, callback);
+                        sendFBMessage(sender, {text: mess1+"heyyyy!"}, callback);
                     });
                 }
 
