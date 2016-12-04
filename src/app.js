@@ -21,6 +21,7 @@ function processEvent(event) {
     var sender = event.sender.id.toString();
 var mess1="false";
 var imageUrl="nth";
+var imageUrl1="noo";
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)||event.message.attachments) {
         if(event.message.attachments){
         mess1="true";
