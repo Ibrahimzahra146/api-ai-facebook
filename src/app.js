@@ -37,20 +37,20 @@ function processEvent(event) {
 
         apiaiRequest.on('response', (response) => {
             if (isDefined(response.result)) {
-                let responseText = response.result.fulfillment.messages[0].speech;
-                let responseData = response.result.fulfillment.messages[1].payload.facebook.data;
+                let responseText = response.result.fulfillment.speech;
+                let responseData = response.result.fulfillment.data;
                 let action = response.result.action;
 
-                if (isDefined(responseData)) {
-                    if (!Array.isArray(responseData)) {
+                if (isDefined(responseData) && isDefined(responseData.facebook)) {
+                    if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, responseData);
+                            sendFBMessage(sender, responseData.facebook);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
                     } else {
-                        responseData.forEach((facebookMessage) => {
+                        responseData.facebook.forEach((facebookMessage) => {
                             try {
                                 if (facebookMessage.sender_action) {
                                     console.log('Response as sender action');
@@ -72,7 +72,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: textPart+""+responseData}, callback);
+                        sendFBMessage(sender, {text: textPart}, callback);
                     });
                 }
 
