@@ -38,41 +38,41 @@ function processEvent(event) {
         apiaiRequest.on('response', (response) => {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.speech;
-                let responseData = response.result.fulfillment.data;
+                let responseData = response.result.fulfillment.messages[1].payload;
                 let action = response.result.action;
 
-                if (1) {
-                    if (1) {
+                if (isDefined(responseData) && isDefined(responseData.facebook)) {
+                    if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, responseData.facebook+" yes1");
+                            sendFBMessage(sender, responseData.facebook);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
                     } else {
-                        async.eachSeries(responseData.facebook, (facebookMessage, callback) => {
+                        responseData.facebook.forEach((facebookMessage) => {
                             try {
                                 if (facebookMessage.sender_action) {
                                     console.log('Response as sender action');
-                                    sendFBSenderAction(sender, facebookMessage.sender_action, callback);
+                                    sendFBSenderAction(sender, facebookMessage.sender_action);
                                 }
                                 else {
                                     console.log('Response as formatted message');
-                                    sendFBMessage(sender, facebookMessage+"yes2", callback);
+                                    sendFBMessage(sender, facebookMessage);
                                 }
                             } catch (err) {
-                                sendFBMessage(sender, {text: err.message}, callback);
+                                sendFBMessage(sender, {text: err.message});
                             }
                         });
                     }
-                } if (isDefined(responseText)) {
+                } else if (isDefined(responseText)) {
                     console.log('Response as text message');
                     // facebook API limit for text length is 320,
                     // so we must split message if needed
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: textPart+"yes3"}, callback);
+                        sendFBMessage(sender, {text: textPart}, callback);
                     });
                 }
 
