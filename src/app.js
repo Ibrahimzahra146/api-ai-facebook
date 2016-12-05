@@ -38,12 +38,17 @@ function processEvent(event) {
         apiaiRequest.on('response', (response) => {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.speech;
+                sendFBMessage(sender, {text: "arrive1"}, callback);
                 let responseData = response.result.fulfillment.messages[1].payload;
+                sendFBMessage(sender, {text: "arrive2"}, callback);
                 let action = response.result.action;
 
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
+                    sendFBMessage(sender, {text: "arrive3"}, callback);
                     if (!Array.isArray(responseData.facebook)) {
+                        sendFBMessage(sender, {text: "arrive4"}, callback);
                         try {
+                            sendFBMessage(sender, {text: "arrive5"}, callback);
                             console.log('Response as formatted message');
                             sendFBMessage(sender, responseData.facebook);
                         } catch (err) {
@@ -52,6 +57,7 @@ function processEvent(event) {
                     } else {
                         responseData.facebook.forEach((facebookMessage) => {
                             try {
+                                sendFBMessage(sender, {text: "arrive6"}, callback);
                                 if (facebookMessage.sender_action) {
                                     console.log('Response as sender action');
                                     sendFBSenderAction(sender, facebookMessage.sender_action);
@@ -66,6 +72,7 @@ function processEvent(event) {
                         });
                     }
                 } else if (isDefined(responseText)) {
+                    sendFBMessage(sender, {text: "arrive7"}, callback);
                     console.log('Response as text message');
                     // facebook API limit for text length is 320,
                     // so we must split message if needed
