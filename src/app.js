@@ -38,14 +38,14 @@ function processEvent(event) {
         apiaiRequest.on('response', (response) => {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.messages[0].speech;
-                let responseData = response.result.fulfillment.messages[1].payload.facebook.attachment.type;
+                let responseData = response.result.fulfillment.messages[1].payload.facebook.attachment;
                 let action = response.result.action;
 
-                if (isDefined(responseData) && isDefined(responseData.facebook)) {
-                    if (!Array.isArray(responseData.facebook)) {
+                if (isDefined(responseData)) {
+                    if (1) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, responseData.facebook);
+                            sendFBMessage(sender, responseData);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
