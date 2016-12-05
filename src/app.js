@@ -38,7 +38,7 @@ function processEvent(event) {
         apiaiRequest.on('response', (response) => {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.messages[0].speech;
-                let responseData = response.result.fulfillment.messages[1];
+                let responseData = response.result.fulfillment.messages[1].payload;
                 let action = response.result.action;
 
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
