@@ -45,7 +45,7 @@ function processEvent(event) {
                     if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, responseData.facebook);
+                            sendFBMessage(sender, responseData.facebook+" yes1");
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -58,7 +58,7 @@ function processEvent(event) {
                                 }
                                 else {
                                     console.log('Response as formatted message');
-                                    sendFBMessage(sender, facebookMessage, callback);
+                                    sendFBMessage(sender, facebookMessage+"yes2", callback);
                                 }
                             } catch (err) {
                                 sendFBMessage(sender, {text: err.message}, callback);
@@ -72,7 +72,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: textPart}, callback);
+                        sendFBMessage(sender, {text: textPart+"yes3"}, callback);
                     });
                 }
 
