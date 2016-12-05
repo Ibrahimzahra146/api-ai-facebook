@@ -19,7 +19,7 @@ const sessionIds = new Map();
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
-
+    var flag ="false";
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
         var text = event.message ? event.message.text : event.postback.payload;
         // Handle a text message from this sender
@@ -38,17 +38,23 @@ function processEvent(event) {
         apiaiRequest.on('response', (response) => {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.speech;
-                sendFBMessage(sender,  "arrive1", callback);
-                let responseData = response.result.fulfillment.messages[1].payload;
-                sendFBMessage(sender,  "arrive2", callback);
+             
+                let responseData = response.result.fulfillment.data;
+                if (response.result.fulfillment.messages[1].payload){
+                    flag="true1";
+                }
+                if (response.result.fulfillment.messages[0]){
+                    flag="true2";
+                }
+                if(responseData.facebook)
+               
                 let action = response.result.action;
 
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
-                    sendFBMessage(sender,  "arrive3", callback);
+               
                     if (!Array.isArray(responseData.facebook)) {
-                        sendFBMessage(sender,  "arrive4", callback);
                         try {
-                            sendFBMessage(sender,  "arrive5", callback);
+                            
                             console.log('Response as formatted message');
                             sendFBMessage(sender, responseData.facebook);
                         } catch (err) {
@@ -57,7 +63,7 @@ function processEvent(event) {
                     } else {
                         responseData.facebook.forEach((facebookMessage) => {
                             try {
-                                sendFBMessage(sender, "arrive6", callback);
+                              
                                 if (facebookMessage.sender_action) {
                                     console.log('Response as sender action');
                                     sendFBSenderAction(sender, facebookMessage.sender_action);
@@ -71,15 +77,15 @@ function processEvent(event) {
                             }
                         });
                     }
-                } else if (isDefined(responseText)) {
-                    sendFBMessage(sender,  "arrive7", callback);
+                } else if (1) {
+                
                     console.log('Response as text message');
                     // facebook API limit for text length is 320,
                     // so we must split message if needed
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: textPart}, callback);
+                        sendFBMessage(sender, {text: ""+flag}, callback);
                     });
                 }
 
