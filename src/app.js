@@ -38,33 +38,7 @@ function processEvent(event) {
         apiaiRequest.on('response', (response) => {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.speech;
-                let responseData =  "attachment": {
-                "type": "template",
-                "payload": {
-                  "template_type": "generic",
-                  "elements": [
-                    {
-                      "buttons": [
-                        {
-                          "type": "postback",
-                          "title": "Show new issues",
-                          "payload": "DEVELOPER_DEFINED_PAYLOAD"
-                        },
-                        {
-                          "type": "postback",
-                          "title": "Post new issue",
-                          "payload": "DEVELOPER_DEFINED_PAYLOAD"
-                        },
-                        {
-                          "type": "postback",
-                          "title": "show most voted issue",
-                          "payload": "DEVELOPER_DEFINED_PAYLOAD"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              };
+                let responseData = response.result.fulfillment.data;
                 let action = response.result.action;
 
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
