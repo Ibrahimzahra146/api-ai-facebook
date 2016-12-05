@@ -19,20 +19,11 @@ const sessionIds = new Map();
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
-var mess1="false";
-var imageUrl="nth";
-var imageUrl1="noo";
-    if ((event.message && event.message.text) || (event.postback && event.postback.payload)||event.message.attachments) {
-        if(event.message.attachments){
-        mess1="true";
-        imageUrl=event.message.attachments[0].payload.url;
-       imageUrl1="ddd";
 
-        }
-        //var text = event.message ? event.message.text : event.postback.payload;
-        var text="how are you";
+    if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
+        var text = event.message ? event.message.text : event.postback.payload;
         // Handle a text message from this sender
-       
+
         if (!sessionIds.has(sender)) {
             sessionIds.set(sender, uuid.v1());
         }
@@ -54,7 +45,7 @@ var imageUrl1="noo";
                     if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, mess1+"heyyyy!"+imageUrl);
+                            sendFBMessage(sender, responseData.facebook);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -67,7 +58,7 @@ var imageUrl1="noo";
                                 }
                                 else {
                                     console.log('Response as formatted message');
-                                    sendFBMessage(sender, mess1+"heyyyy!"+imageUrl, callback);
+                                    sendFBMessage(sender, facebookMessage, callback);
                                 }
                             } catch (err) {
                                 sendFBMessage(sender, {text: err.message}, callback);
@@ -81,7 +72,7 @@ var imageUrl1="noo";
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: mess1+"heyyyy!"+imageUrl}, callback);
+                        sendFBMessage(sender, {text: textPart}, callback);
                     });
                 }
 
@@ -223,8 +214,6 @@ app.post('/webhook/', (req, res) => {
         if (data.entry) {
             let entries = data.entry;
             entries.forEach((entry) => {
-
-
                 let messaging_events = entry.messaging;
                 if (messaging_events) {
                     messaging_events.forEach((event) => {
