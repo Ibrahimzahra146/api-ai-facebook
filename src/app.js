@@ -19,7 +19,7 @@ const sessionIds = new Map();
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
-    var flag ="false";
+
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
         var text = event.message ? event.message.text : event.postback.payload;
         // Handle a text message from this sender
@@ -38,23 +38,38 @@ function processEvent(event) {
         apiaiRequest.on('response', (response) => {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.speech;
-             
-                let responseData = response.result.fulfillment.data;
-                if (response.result.fulfillment.messages[1].payload){
-                    flag="true1";
+                let responseData =  "attachment": {
+                "type": "template",
+                "payload": {
+                  "template_type": "generic",
+                  "elements": [
+                    {
+                      "buttons": [
+                        {
+                          "type": "postback",
+                          "title": "Show new issues",
+                          "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                        },
+                        {
+                          "type": "postback",
+                          "title": "Post new issue",
+                          "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                        },
+                        {
+                          "type": "postback",
+                          "title": "show most voted issue",
+                          "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                        }
+                      ]
+                    }
+                  ]
                 }
-                if (response.result.fulfillment.messages[0]){
-                    flag="true2";
-                }
-                if(responseData.facebook)
-               
+              };
                 let action = response.result.action;
 
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
-               
                     if (!Array.isArray(responseData.facebook)) {
                         try {
-                            
                             console.log('Response as formatted message');
                             sendFBMessage(sender, responseData.facebook);
                         } catch (err) {
@@ -63,7 +78,6 @@ function processEvent(event) {
                     } else {
                         responseData.facebook.forEach((facebookMessage) => {
                             try {
-                              
                                 if (facebookMessage.sender_action) {
                                     console.log('Response as sender action');
                                     sendFBSenderAction(sender, facebookMessage.sender_action);
@@ -77,15 +91,14 @@ function processEvent(event) {
                             }
                         });
                     }
-                } else if (1) {
-                
+                } else if (isDefined(responseText)) {
                     console.log('Response as text message');
                     // facebook API limit for text length is 320,
                     // so we must split message if needed
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: ""+flag}, callback);
+                        sendFBMessage(sender, {text: textPart}, callback);
                     });
                 }
 
