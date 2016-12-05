@@ -38,7 +38,7 @@ function processEvent(event) {
         apiaiRequest.on('response', (response) => {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.messages[0].speech;
-                let responseData = response.result.fulfillment.messages[1].payload.facebook.attachment;
+                let responseData = response.result.fulfillment.messages[1].payload.facebook;
                 let action = response.result.action;
 
                 if (isDefined(responseData)) {
@@ -50,7 +50,7 @@ function processEvent(event) {
                             sendFBMessage(sender, {text: err.message});
                         }
                     } else {
-                        responseData.facebook.forEach((facebookMessage) => {
+                        responseData.forEach((facebookMessage) => {
                             try {
                                 if (facebookMessage.sender_action) {
                                     console.log('Response as sender action');
