@@ -44,7 +44,7 @@ function processEvent(event) {
                 let action = response.result.action;
 
                 if (1) {
-                    if (!Array.isArray(fb)) {
+                    if (1) {
                         try {
                             console.log('Response as formatted message');
                             sendFBMessage(sender, fb);
