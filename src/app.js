@@ -39,12 +39,12 @@ function processEvent(event) {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.speech;
                 let responseData = response.result.fulfillment.data;
-                let fb = response.result.fulfillment.messages[1].payload.facebook.attachment.payload;
+                let fb = response.result.fulfillment.messages[1].payload.facebook.attachment;
                
                 let action = response.result.action;
 
-                if (1) {
-                    if (1) {
+                  if (isDefined(responseData) && isDefined(responseData.facebook)) {
+                    if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
                             sendFBMessage(sender, fb);
@@ -74,7 +74,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: textPart+"ss"+responseData+""+fb}, callback);
+                        sendFBMessage(sender, fb, callback);
                     });
                 }
 
