@@ -39,7 +39,7 @@ function processEvent(event) {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.speech;
                 let responseData = response.result.fulfillment.data;
-                let fb=responseData.facebook;
+               
                 let action = response.result.action;
 
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
@@ -73,7 +73,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: textPart+"ss"+fb}, callback);
+                        sendFBMessage(sender, {text: textPart+"ss"+responseData}, callback);
                     });
                 }
 
