@@ -58,8 +58,6 @@ function processEvent(event) {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.speech;
                 let responseData = response.result.fulfillment.data;
-                let fb=response.result.fulfillment.messages[1].payload.facebook;
-                var obj = JSON.parse(fb);
                 let action = response.result.action;
 
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
