@@ -43,16 +43,16 @@ function processEvent(event) {
                
                 let action = response.result.action;
 
-                if (isDefined(responseData) && isDefined(responseData.facebook)) {
-                    if (!Array.isArray(responseData.facebook)) {
+                if (1) {
+                    if (!Array.isArray(fb)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, responseData.facebook);
+                            sendFBMessage(sender, fb);
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
                     } else {
-                        responseData.facebook.forEach((facebookMessage) => {
+                        fb.forEach((facebookMessage) => {
                             try {
                                 if (facebookMessage.sender_action) {
                                     console.log('Response as sender action');
