@@ -37,8 +37,9 @@ function processEvent(event) {
 
         apiaiRequest.on('response', (response) => {
             if (isDefined(response.result)) {
-                let responseText = response.result.fulfillment.speech;
-                let responseData = response.result.fulfillment.data;
+                let responseText = response.result.fulfillment.messages[0].speech;
+                let responseData = response.result.fulfillment.messages[1].payload;
+                responseData=JSON.parse(responseData);
                 let action = response.result.action;
 
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
@@ -72,7 +73,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: textPart}, callback);
+                        sendFBMessage(sender, {text: textPart+""+responseData}, callback);
                     });
                 }
 
