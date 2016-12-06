@@ -39,7 +39,7 @@ function processEvent(event) {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.speech;
                 let responseData = response.result.fulfillment.data;
-                let fb = response.result.fulfillment.messages[1].payload.facebook.attachment.payload.elements[0].buttons[0].title;
+                let fb = response.result.fulfillment.messages[1].payload.facebook.attachment.payload;
                
                 let action = response.result.action;
 
