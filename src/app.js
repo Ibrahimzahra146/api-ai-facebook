@@ -39,6 +39,8 @@ function processEvent(event) {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.speech;
                 let responseData = response.result.fulfillment.data;
+                let fb=response.result.fulfillment.messages[1].payload.facebook;
+                var obj = JSON.parse(fb);
                 let action = response.result.action;
 
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
@@ -66,6 +68,7 @@ function processEvent(event) {
                         });
                     }
                 } else if (isDefined(responseText)) {
+                     sendFBMessage(sender, obj);
                     console.log('Response as text message');
                     // facebook API limit for text length is 320,
                     // so we must split message if needed
