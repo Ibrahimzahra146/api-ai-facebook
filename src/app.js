@@ -19,7 +19,8 @@ const sessionIds = new Map();
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
-
+    var flag="false";
+    var fb="";
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
         var text = event.message ? event.message.text : event.postback.payload;
         // Handle a text message from this sender
@@ -39,14 +40,17 @@ function processEvent(event) {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.messages[0].speech;
                 let responseData = response.result.fulfillment.messages[1].payload;
-                responseData=JSON.parse(responseData);
+                fb=responseData.facebook;
                 let action = response.result.action;
-
+                if(responseData=="undefined"||responseData==null)
+                {
+					flag="yes its undefined";
+                }
                 if (isDefined(responseData) && isDefined(responseData.facebook)) {
                     if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
-                            sendFBMessage(sender, responseData.facebook);
+                            sendFBMessage(sender, responseData.facebook+"yesss");
                         } catch (err) {
                             sendFBMessage(sender, {text: err.message});
                         }
@@ -73,7 +77,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: textPart+""+responseData}, callback);
+                        sendFBMessage(sender, {text: textPart+""+fb+""+flag}, callback);
                     });
                 }
 
