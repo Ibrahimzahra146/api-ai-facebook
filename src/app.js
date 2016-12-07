@@ -23,7 +23,7 @@ function processEvent(event) {
       var splittedText1 = splitResponse("I am at the beginning");
 
                     async.eachSeries(splittedText1, (textPart, callback) => {
-                        sendFBMessage(sender, {text: textPart+"yes123"}, callback);
+                        sendFBMessage(sender, "HI IBRAHIM 123", callback);
                        
 
                     });
