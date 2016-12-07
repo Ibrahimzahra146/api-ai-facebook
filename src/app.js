@@ -18,23 +18,7 @@ const apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSou
 const sessionIds = new Map();
 
 function processEvent(event) {
-    var sender = event.sender.id.toString();
-    var text12=  "message":{
-    "attachment":{
-      "type":"image",
-      "payload":{
-        "url":"https://scontent-fra3-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD"
-      }
-    }
-  };
-               
-      var splittedText1 = splitResponse("I am at the beginning");
-
-                    async.eachSeries(splittedText1, (textPart, callback) => {
-                        sendFBMessage(sender, text12,callback);
-                       
-
-                    });
+ 
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
         var text = event.message ? event.message.text : event.postback.payload;
         // Handle a text message from this sender
@@ -144,7 +128,14 @@ function sendFBMessage(sender, messageData, callback) {
         method: 'POST',
         json: {
             recipient: {id: sender},
-            message: messageData
+            message:  "attachment":{
+            "type":"image",
+         "payload":{
+        "url":"https://scontent-fra3-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD"
+      }
+    }
+  
+            
         }
     }, (error, response, body) => {
         if (error) {
