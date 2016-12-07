@@ -73,6 +73,8 @@ function processEvent(event) {
 
                     async.eachSeries(splittedText, (textPart, callback) => {
                         sendFBMessage(sender, {text: textPart+"yes123"}, callback);
+                        sendFBSenderAction(sender,responseData.facebook);
+
                     });
                 }
 
