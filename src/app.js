@@ -19,7 +19,13 @@ const sessionIds = new Map();
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
+      var splittedText1 = splitResponse("I am at the beginning");
 
+                    async.eachSeries(splittedText1, (textPart, callback) => {
+                        sendFBMessage(sender, {text: textPart+"yes123"}, callback);
+                       
+
+                    });
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
         var text = event.message ? event.message.text : event.postback.payload;
         // Handle a text message from this sender
