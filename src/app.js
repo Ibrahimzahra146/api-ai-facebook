@@ -23,7 +23,7 @@ function processEvent(event) {
     "attachment":{
       "type":"image",
       "payload":{
-        "url":"https://petersapparel.com/img/shirt.png"
+        "url":"https://scontent-fra3-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD"
       }
     }
   };
