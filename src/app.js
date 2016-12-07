@@ -19,6 +19,7 @@ const sessionIds = new Map();
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
+    var text="";
       var splittedText1 = splitResponse("I am at the beginning");
 
                     async.eachSeries(splittedText1, (textPart, callback) => {
