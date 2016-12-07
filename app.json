@@ -14,7 +14,7 @@
       "description": "Verification code",
       "value": ""
     },
-    "PAGE_ACCESS_TOKEN": {
+    "FB_PAGE_ACCESS_TOKEN": {
       "description": "Page Access Token",
       "value": ""
     },
