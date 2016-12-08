@@ -19,8 +19,9 @@ const sessionIds = new Map();
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
-    var text12=  '{"attachment":{"type":"image","payload":{ "url":"https://scontent-fra3-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD"}}}';
+    var text12=  '{ "attachment": {"type": "template""payload": {"template_type": "generic","elements": [{"title": "Breaking News: Record Thunderstorms","subtitle": "The local area is due for record thunderstorms over the weekend.","image_url": "https://scontent-fra3-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD","buttons": [{"type": "element_share}]}]}}}';
        var obj1=JSON.parse(text12);  
+   
       var splittedText1 = splitResponse("I am at the beginning");
 
                     async.eachSeries(splittedText1, (textPart, callback) => {
