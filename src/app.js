@@ -56,7 +56,7 @@ function processEvent(event) {
                             sendFBMessage(sender, { text: image1}, callback);
                         });
 
-
+                });
                     let responseData = response.result.fulfillment.data;
                     let action = response.result.action;
 
@@ -102,6 +102,7 @@ function processEvent(event) {
         apiaiRequest.end();
     }
 }
+
 
 function splitResponse(str) {
     if (str.length <= 320) {
