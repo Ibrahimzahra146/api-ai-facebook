@@ -14,42 +14,12 @@ const APIAI_LANG = process.env.APIAI_LANG || 'en';
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 
-const apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
+const apiAiService = apiai(APIAI_ACCESS_TOKEN, { language: APIAI_LANG, requestSource: "fb" });
 const sessionIds = new Map();
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
-var text12= {"attachment": {
-      "type": "template",
-      "payload": {
-        "template_type": "generic",
-        "elements": [
-          {
-            "title": "Breaking News: Record Thunderstorms",
-            "subtitle": "The local area is due for record thunderstorms over the weekend.",
-            "image_url": "https://scontent-fra3-1.xx.fbcdn.net/v/t1.0-9/13718655_1143790748975145_2575595500054770440_n.jpg?oh=4a89371dd70b8cfe167d882da3fe6ca4&oe=58F85BFD",
-             "buttons":[
-                  {
-                     "type":"postback",
-                     "title":"show near by issues",
-                     "payload":"DEVELOPER_DEFINED_PAYLOAD"
-      }
-            ]
-          }
-        ]
-      }
-    }
-  };
-    var json1 = JSON.stringify(text12);
-    var obj1=JSON.parse(json1);  
-   
-      var splittedText1 = splitResponse("I am at the beginning");
 
-                    async.eachSeries(splittedText1, (textPart, callback) => {
-                        sendFBMessage(sender,obj1,callback);
-                       
-
-                    });
 
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
         var text = event.message ? event.message.text : event.postback.payload;
@@ -69,6 +39,11 @@ var text12= {"attachment": {
         apiaiRequest.on('response', (response) => {
             if (isDefined(response.result)) {
                 let responseText = response.result.fulfillment.speech;
+              
+                    $.getJSON('https://h8m587s0i7.execute-api.us-east-1.amazonaws.com/dev/usersposts?page=1', function (data) {
+                        sendFbStructureMess(sender,data);
+                    });
+                
                 let responseData = response.result.fulfillment.data;
                 let action = response.result.action;
 
@@ -78,7 +53,7 @@ var text12= {"attachment": {
                             console.log('Response as formatted message');
                             sendFBMessage(sender, responseData.facebook);
                         } catch (err) {
-                            sendFBMessage(sender, {text: err.message});
+                            sendFBMessage(sender, { text: err.message });
                         }
                     } else {
                         async.eachSeries(responseData.facebook, (facebookMessage, callback) => {
@@ -92,7 +67,7 @@ var text12= {"attachment": {
                                     sendFBMessage(sender, facebookMessage, callback);
                                 }
                             } catch (err) {
-                                sendFBMessage(sender, {text: err.message}, callback);
+                                sendFBMessage(sender, { text: err.message }, callback);
                             }
                         });
                     }
@@ -103,7 +78,7 @@ var text12= {"attachment": {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: textPart}, callback);
+                        sendFBMessage(sender, { text: textPart }, callback);
                     });
                 }
 
@@ -154,10 +129,10 @@ function chunkString(s, len) {
 function sendFBMessage(sender, messageData, callback) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token: FB_PAGE_ACCESS_TOKEN},
+        qs: { access_token: FB_PAGE_ACCESS_TOKEN },
         method: 'POST',
         json: {
-            recipient: {id: sender},
+            recipient: { id: sender },
             message: messageData
         }
     }, (error, response, body) => {
@@ -172,15 +147,50 @@ function sendFBMessage(sender, messageData, callback) {
         }
     });
 }
+function sendFbStructureMess(sender,objMessage) {
+    var imageURL=objMessage.results[0].imageUrl;
+    var text12 = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [
+                    {
+                        "title": "Breaking News: Record Thunderstorms",
+                        "subtitle": "The local area is due for record thunderstorms over the weekend.",
+                        "image_url": imageURL,
+                        "buttons": [
+                            {
+                                "type": "postback",
+                                "title": "show near by issues",
+                                "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    };
+    var json1 = JSON.stringify(text12);
+    var obj1 = JSON.parse(json1);
+
+    var splittedText1 = splitResponse("I am at the beginning");
+
+    async.eachSeries(splittedText1, (textPart, callback) => {
+        sendFBMessage(sender, obj1, callback);
+
+
+    });
+}
 
 function sendFBSenderAction(sender, action, callback) {
     setTimeout(() => {
         request({
             url: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: {access_token: FB_PAGE_ACCESS_TOKEN},
+            qs: { access_token: FB_PAGE_ACCESS_TOKEN },
             method: 'POST',
             json: {
-                recipient: {id: sender},
+                recipient: { id: sender },
                 sender_action: action
             }
         }, (error, response, body) => {
@@ -198,9 +208,9 @@ function sendFBSenderAction(sender, action, callback) {
 
 function doSubscribeRequest() {
     request({
-            method: 'POST',
-            uri: "https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=" + FB_PAGE_ACCESS_TOKEN
-        },
+        method: 'POST',
+        uri: "https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=" + FB_PAGE_ACCESS_TOKEN
+    },
         (error, response, body) => {
             if (error) {
                 console.error('Error while subscription: ', error);
@@ -224,7 +234,7 @@ function isDefined(obj) {
 
 const app = express();
 
-app.use(bodyParser.text({type: 'application/json'}));
+app.use(bodyParser.text({ type: 'application/json' }));
 
 app.get('/webhook/', (req, res) => {
     if (req.query['hub.verify_token'] == FB_VERIFY_TOKEN) {
