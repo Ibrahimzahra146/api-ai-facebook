@@ -46,7 +46,7 @@ function processEvent(event) {
 
 
                 });
-                getJSONP('http://soundcloud.com/oembed?url=http%3A//soundcloud.com/forss/flickermood&format=js&callback=?', function (data) {
+                getJSONP('https://h8m587s0i7.execute-api.us-east-1.amazonaws.com/dev/usersposts?page=1', function (data) {
                     var splittedText11 = splitResponse("I am at the beginning");
                     var image1=data.results[0].imageUrl;
                      async.eachSeries(splittedText11, (textPart, callback) => {
