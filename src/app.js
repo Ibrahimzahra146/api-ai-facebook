@@ -38,17 +38,26 @@ function processEvent(event) {
 
         apiaiRequest.on('response', (response) => {
             if (isDefined(response.result)) {
-               
-                    $.getJSON('https://h8m587s0i7.execute-api.us-east-1.amazonaws.com/dev/usersposts?page=1', function (data) {
-                         let responseText = response.result.fulfillment.speech;
-                          var text11="hi Ibrahim zahrea"
-                          var splittedText1 = splitResponse("I am at the beginning");
-                         async.eachSeries(splittedText1, (textPart, callback) => {
-                         sendFBMessage(sender, {text:text11},callback);
-                         });
-                        sendFbStructureMess(sender,data);
+                let responseText = response.result.fulfillment.speech;
+                var splittedText1 = splitResponse("I am at the beginning");
+
+                async.eachSeries(splittedText1, (textPart, callback) => {
+                    sendFBMessage(sender, { text: "I am before the request" }, callback);
+
+
+                });
+                $http.get("https://h8m587s0i7.execute-api.us-east-1.amazonaws.com/dev/usersposts?page=1")
+                    .then(function (response1) {
+                        var splittedText11 = splitResponse("I am at the beginning");
+
+                        async.eachSeries(splittedText11, (textPart, callback) => {
+                            sendFBMessage(sender, { text: "I am before the request" }, callback);
+
+
+                        });
+                        sendFbStructureMess(sender, response1);
                     });
-                
+
                 let responseData = response.result.fulfillment.data;
                 let action = response.result.action;
 
@@ -152,8 +161,8 @@ function sendFBMessage(sender, messageData, callback) {
         }
     });
 }
-function sendFbStructureMess(sender,objMessage) {
-    var imageURL=objMessage.results[0].imageUrl;
+function sendFbStructureMess(sender, objMessage) {
+    var imageURL = objMessage.results[0].imageUrl;
     var text12 = {
         "attachment": {
             "type": "template",
