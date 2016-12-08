@@ -51,7 +51,7 @@ function processEvent(event) {
                         var splittedText11 = splitResponse("I am at the beginning");
 
                         async.eachSeries(splittedText11, (textPart, callback) => {
-                            sendFBMessage(sender, { text: "I am before the request" }, callback);
+                            sendFBMessage(sender, { text: "I am in the request" }, callback);
 
 
                         });
