@@ -153,15 +153,15 @@ function sendFBMessage(sender, messageData, callback) {
     });
 }
 function getJSONP() {
-    var url = "https://h8m587s0i7.execute-api.us-east-1.amazonaws.com/dev/usersposts?page=1"
+    var url1 = "https://h8m587s0i7.execute-api.us-east-1.amazonaws.com/dev/usersposts?page=1";
 
     request({
-        url: url,
+        url: url1,
         json: true
     }, function (error, response, body) {
 
         if (!error && response.statusCode === 200) {
-            var imageURL = body.results[0]["imageUrl"];
+            var imageURL1 = body.results[0]["imageUrl"];
             var text12 = {
                 "attachment": {
                     "type": "template",
@@ -171,7 +171,7 @@ function getJSONP() {
                             {
                                 "title": "Breaking News: Record Thunderstorms",
                                 "subtitle": "The local area is due for record thunderstorms over the weekend.",
-                                "image_url": imageURL,
+                                "image_url": imageURL1,
                                 "buttons": [
                                     {
                                         "type": "postback",
@@ -223,6 +223,13 @@ function sendFbStructureMess(sender, objMessage) {
             }
         }
     };
+     var splittedText111 = splitResponse("I am at the beginning");
+
+                async.eachSeries(splittedText111, (textPart, callback) => {
+                    sendFBMessage(sender, { text: "I am after the request" }, callback);
+
+
+                });
     var json1 = JSON.stringify(text12);
     var obj1 = JSON.parse(json1);
 
