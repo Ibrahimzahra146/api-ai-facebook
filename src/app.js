@@ -30,12 +30,37 @@ function processEvent(event) {
                 "attachment": {
                     "type": "template",
                     "payload": {
-                        "template_type": "generic",
+                        "template_type": "list",
+                        "top_element_style": "compact",
                         "elements": [
                             {
-                                "title": "Breaking News: Record Thunderstorms",
+                                "title": "first image",
+                                "subtitle": "near you",
+                                "image_url": body.results[0]["imageUrl"],
+                                "buttons": [
+                                    {
+                                        "type": "postback",
+                                        "title": "show near by issues",
+                                        "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                                    }
+                                ]
+                            },
+                            {
+                                "title": "Second image",
                                 "subtitle": "The local area is due for record thunderstorms over the weekend.",
-                                "image_url":body.results[1]["imageUrl"],
+                                "image_url": body.results[1]["imageUrl"],
+                                "buttons": [
+                                    {
+                                        "type": "postback",
+                                        "title": "show near by issues",
+                                        "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                                    }
+                                ]
+                            },
+                            {
+                                "title": "third image",
+                                "subtitle": "The local area is due for record thunderstorms over the weekend.",
+                                "image_url": body.results[2]["imageUrl"],
                                 "buttons": [
                                     {
                                         "type": "postback",
