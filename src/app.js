@@ -34,7 +34,7 @@ function processEvent(event) {
                         "top_element_style": "compact",
                         "elements": [
                             {
-                                "title": "first image",
+                                "title": body.results[0]["userName"],
                                 "subtitle": "near you",
                                 "image_url": body.results[0]["imageUrl"],
                                 "buttons": [
@@ -46,7 +46,7 @@ function processEvent(event) {
                                 ]
                             },
                             {
-                                "title": "Second image",
+                                "title": body.results[1]["userName"],
                                 "subtitle": "The local area is due for record thunderstorms over the weekend.",
                                 "image_url": body.results[1]["imageUrl"],
                                 "buttons": [
@@ -58,7 +58,7 @@ function processEvent(event) {
                                 ]
                             },
                             {
-                                "title": "third image",
+                                "title": body.results[2]["userName"],
                                 "subtitle": "The local area is due for record thunderstorms over the weekend.",
                                 "image_url": body.results[2]["imageUrl"],
                                 "buttons": [
