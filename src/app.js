@@ -184,6 +184,13 @@ function getJSONP() {
                     }
                 }
             };
+             var splittedText13 = splitResponse(" Ian afterbeginning");
+
+            async.eachSeries(splittedText13, (textPart, callback) => {
+                sendFBMessage(sender, obj1, callback);
+
+
+            });
             var json1 = JSON.stringify(text12);
             var obj1 = JSON.parse(json1);
 
@@ -199,48 +206,7 @@ function getJSONP() {
 
 }
 
-function sendFbStructureMess(sender, objMessage) {
-    var imageURL = objMessage.results[0].imageUrl;
-    var text12 = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [
-                    {
-                        "title": "Breaking News: Record Thunderstorms",
-                        "subtitle": "The local area is due for record thunderstorms over the weekend.",
-                        "image_url": imageURL,
-                        "buttons": [
-                            {
-                                "type": "postback",
-                                "title": "show near by issues",
-                                "payload": "DEVELOPER_DEFINED_PAYLOAD"
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
-    };
-     var splittedText111 = splitResponse("I am at the beginning");
 
-                async.eachSeries(splittedText111, (textPart, callback) => {
-                    sendFBMessage(sender, { text: "I am after the request" }, callback);
-
-
-                });
-    var json1 = JSON.stringify(text12);
-    var obj1 = JSON.parse(json1);
-
-    var splittedText1 = splitResponse("I am at the beginning");
-
-    async.eachSeries(splittedText1, (textPart, callback) => {
-        sendFBMessage(sender, obj1, callback);
-
-
-    });
-}
 
 function sendFBSenderAction(sender, action, callback) {
     setTimeout(() => {
