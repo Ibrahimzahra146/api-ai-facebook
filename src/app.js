@@ -184,13 +184,10 @@ function getJSONP() {
                     }
                 }
             };
-             var splittedText13 = splitResponse(" Ian afterbeginning");
-
-            async.eachSeries(splittedText13, (textPart, callback) => {
-                sendFBMessage(sender, obj1, callback);
 
 
-            });
+
+
             var json1 = JSON.stringify(text12);
             var obj1 = JSON.parse(json1);
 
