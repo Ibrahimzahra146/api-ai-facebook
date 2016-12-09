@@ -46,56 +46,47 @@ function processEvent(event) {
 
 
                 });
-                getJSONP('https://h8m587s0i7.execute-api.us-east-1.amazonaws.com/dev/usersposts?page=1', function (data) {
-                    var splittedText11 = splitResponse("I am at the beginning");
-                    var image1=data.results[0].imageUrl;
-                     async.eachSeries(splittedText11, (textPart, callback) => {
-                            sendFBMessage(sender, { text: "I am in request"}, callback);
-                        });
-                        async.eachSeries(splittedText11, (textPart, callback) => {
-                            sendFBMessage(sender, { text: image1}, callback);
-                        });
+                getJSONP();
 
-                });
-                    let responseData = response.result.fulfillment.data;
-                    let action = response.result.action;
+                let responseData = response.result.fulfillment.data;
+                let action = response.result.action;
 
-                    if (isDefined(responseData) && isDefined(responseData.facebook)) {
-                        if (!Array.isArray(responseData.facebook)) {
-                            try {
-                                console.log('Response as formatted message');
-                                sendFBMessage(sender, responseData.facebook);
-                            } catch (err) {
-                                sendFBMessage(sender, { text: err.message });
-                            }
-                        } else {
-                            async.eachSeries(responseData.facebook, (facebookMessage, callback) => {
-                                try {
-                                    if (facebookMessage.sender_action) {
-                                        console.log('Response as sender action');
-                                        sendFBSenderAction(sender, facebookMessage.sender_action, callback);
-                                    }
-                                    else {
-                                        console.log('Response as formatted message');
-                                        sendFBMessage(sender, facebookMessage, callback);
-                                    }
-                                } catch (err) {
-                                    sendFBMessage(sender, { text: err.message }, callback);
-                                }
-                            });
+                if (isDefined(responseData) && isDefined(responseData.facebook)) {
+                    if (!Array.isArray(responseData.facebook)) {
+                        try {
+                            console.log('Response as formatted message');
+                            sendFBMessage(sender, responseData.facebook);
+                        } catch (err) {
+                            sendFBMessage(sender, { text: err.message });
                         }
-                    } else if (isDefined(responseText)) {
-                        console.log('Response as text message');
-                        // facebook API limit for text length is 320,
-                        // so we must split message if needed
-                        var splittedText = splitResponse(responseText);
-
-                        async.eachSeries(splittedText, (textPart, callback) => {
-                            sendFBMessage(sender, { text: textPart }, callback);
+                    } else {
+                        async.eachSeries(responseData.facebook, (facebookMessage, callback) => {
+                            try {
+                                if (facebookMessage.sender_action) {
+                                    console.log('Response as sender action');
+                                    sendFBSenderAction(sender, facebookMessage.sender_action, callback);
+                                }
+                                else {
+                                    console.log('Response as formatted message');
+                                    sendFBMessage(sender, facebookMessage, callback);
+                                }
+                            } catch (err) {
+                                sendFBMessage(sender, { text: err.message }, callback);
+                            }
                         });
                     }
+                } else if (isDefined(responseText)) {
+                    console.log('Response as text message');
+                    // facebook API limit for text length is 320,
+                    // so we must split message if needed
+                    var splittedText = splitResponse(responseText);
 
+                    async.eachSeries(splittedText, (textPart, callback) => {
+                        sendFBMessage(sender, { text: textPart }, callback);
+                    });
                 }
+
+            }
         });
 
         apiaiRequest.on('error', (error) => console.error(error));
@@ -161,20 +152,50 @@ function sendFBMessage(sender, messageData, callback) {
         }
     });
 }
-function getJSONP(url, success) {
+function getJSONP() {
+    var url = "https://h8m587s0i7.execute-api.us-east-1.amazonaws.com/dev/usersposts?page=1"
 
-    var ud = '_' + +new Date,
-        script = document.createElement('script'),
-        head = document.getElementsByTagName('head')[0]
-            || document.documentElement;
+    request({
+        url: url,
+        json: true
+    }, function (error, response, body) {
 
-    window[ud] = function (data) {
-        head.removeChild(script);
-        success && success(data);
-    };
+        if (!error && response.statusCode === 200) {
+            var imageURL = body.results[0]["imageUrl"];
+            var text12 = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [
+                            {
+                                "title": "Breaking News: Record Thunderstorms",
+                                "subtitle": "The local area is due for record thunderstorms over the weekend.",
+                                "image_url": imageURL,
+                                "buttons": [
+                                    {
+                                        "type": "postback",
+                                        "title": "show near by issues",
+                                        "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            };
+            var json1 = JSON.stringify(text12);
+            var obj1 = JSON.parse(json1);
 
-    script.src = url.replace('callback=?', 'callback=' + ud);
-    head.appendChild(script);
+            var splittedText1 = splitResponse("I am at the beginning");
+
+            async.eachSeries(splittedText1, (textPart, callback) => {
+                sendFBMessage(sender, obj1, callback);
+
+
+            });
+        }
+    })
 
 }
 
