@@ -86,7 +86,7 @@ function processEvent(event) {
     });
 
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
-        var text = event.message ? event.message.text : event.postback.payload;
+        var mtext = event.message ? event.message.text : event.postback.payload;
         // Handle a text message from this sender
 
         if (!sessionIds.has(sender)) {
@@ -137,7 +137,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, { text: textPart }, callback);
+                        sendFBMessage(sender, { text: mtext }, callback);
                     });
                 }
 
