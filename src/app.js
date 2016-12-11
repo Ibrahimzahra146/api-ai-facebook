@@ -19,76 +19,12 @@ const sessionIds = new Map();
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
-    request({
-        url: "https://h8m587s0i7.execute-api.us-east-1.amazonaws.com/dev/usersposts?page=1",
-        json: true
-    }, function (error, response, body) {
 
-        if (!error && response.statusCode === 200) {
-
-            var text12 = {
-                "attachment": {
-                    "type": "template",
-                    "payload": {
-                        "template_type": "list",
-                        "top_element_style": "compact",
-                        "elements": [
-                            {
-                                "title": body.results[0]["userName"],
-                                "subtitle": "near you",
-                                "image_url": body.results[0]["imageUrl"],
-                                "buttons": [
-                                    {
-                                        "type": "postback",
-                                        "title": "show near by issues",
-                                        "payload": "DEVELOPER_DEFINED_PAYLOAD"
-                                    }
-                                ]
-                            },
-                            {
-                                "title": body.results[1]["userName"],
-                                "subtitle": "The local area is due for record thunderstorms over the weekend.",
-                                "image_url": body.results[1]["imageUrl"],
-                                "buttons": [
-                                    {
-                                        "type": "postback",
-                                        "title": "show near by issues",
-                                        "payload": "DEVELOPER_DEFINED_PAYLOAD"
-                                    }
-                                ]
-                            },
-                            {
-                                "title": body.results[2]["userName"],
-                                "subtitle": "The local area is due for record thunderstorms over the weekend.",
-                                "image_url": body.results[2]["imageUrl"],
-                                "buttons": [
-                                    {
-                                        "type": "postback",
-                                        "title": "show near by issues",
-                                        "payload": "DEVELOPER_DEFINED_PAYLOAD"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            };
-            var stringfy = JSON.stringify(text12);
-            var obj1 = JSON.parse(stringfy);
-            var splittedText1 = splitResponse("I am at the beginning");
-
-            async.eachSeries(splittedText1, (textPart, callback) => {
-                sendFBMessage(sender, obj1, callback);
-
-
-            });
-        }
-    });
 
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
         var text = event.message ? event.message.text : event.postback.payload;
-        var text12=event.postback.payload.toString();
-      
+        var text12 = event.postback.payload.toString();
+
         // Handle a text message from this sender
 
         if (!sessionIds.has(sender)) {
@@ -107,8 +43,75 @@ function processEvent(event) {
                 let responseText = response.result.fulfillment.speech;
                 let responseData = response.result.fulfillment.data;
                 let action = response.result.action;
+                if (responseText == "get") {
+                    request({
+                        url: "https://h8m587s0i7.execute-api.us-east-1.amazonaws.com/dev/usersposts?page=1",
+                        json: true
+                    }, function (error, response, body) {
 
-                if (isDefined(responseData) && isDefined(responseData.facebook)) {
+                        if (!error && response.statusCode === 200) {
+
+                            var text12 = {
+                                "attachment": {
+                                    "type": "template",
+                                    "payload": {
+                                        "template_type": "list",
+                                        "top_element_style": "compact",
+                                        "elements": [
+                                            {
+                                                "title": body.results[0]["userName"],
+                                                "subtitle": "near you",
+                                                "image_url": body.results[0]["imageUrl"],
+                                                "buttons": [
+                                                    {
+                                                        "type": "postback",
+                                                        "title": "show near by issues",
+                                                        "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "title": body.results[1]["userName"],
+                                                "subtitle": "The local area is due for record thunderstorms over the weekend.",
+                                                "image_url": body.results[1]["imageUrl"],
+                                                "buttons": [
+                                                    {
+                                                        "type": "postback",
+                                                        "title": "show near by issues",
+                                                        "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "title": body.results[2]["userName"],
+                                                "subtitle": "The local area is due for record thunderstorms over the weekend.",
+                                                "image_url": body.results[2]["imageUrl"],
+                                                "buttons": [
+                                                    {
+                                                        "type": "postback",
+                                                        "title": "show near by issues",
+                                                        "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            };
+                            var stringfy = JSON.stringify(text12);
+                            var obj1 = JSON.parse(stringfy);
+                            var splittedText1 = splitResponse("I am at the beginning");
+
+                            async.eachSeries(splittedText1, (textPart, callback) => {
+                                sendFBMessage(sender, obj1, callback);
+
+
+                            });
+                        }
+                    });
+                }
+
+                else if (isDefined(responseData) && isDefined(responseData.facebook)) {
                     if (!Array.isArray(responseData.facebook)) {
                         try {
                             console.log('Response as formatted message');
@@ -139,7 +142,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, { text: text12+"hi" }, callback);
+                        sendFBMessage(sender, { text: text12 + "hi" }, callback);
                     });
                 }
 
