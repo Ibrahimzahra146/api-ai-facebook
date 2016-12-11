@@ -87,12 +87,7 @@ function processEvent(event) {
 
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
         var text = event.message ? event.message.text : event.postback.payload;
-        var text2=event.postback.payload;
-         var splittedText12 = splitResponse(responseText);
-
-                    async.eachSeries(splittedText12, (textPart, callback) => {
-                        sendFBMessage(sender, { text: "hiii"+text2 }, callback);
-                    });
+      
         // Handle a text message from this sender
 
         if (!sessionIds.has(sender)) {
