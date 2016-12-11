@@ -64,6 +64,11 @@ function processEvent(event) {
                                                 "buttons": [
                                                     {
                                                         "type": "element_share"
+                                                    },
+                                                     {
+                                                         "type": "postback",
+                                                         "title": "+1",
+                                                          "payload": "like"
                                                     }
                                                 ]
                                             },
@@ -74,6 +79,11 @@ function processEvent(event) {
                                                 "buttons": [
                                                     {
                                                         "type": "element_share"
+                                                    }, 
+                                                    {
+                                                         "type": "postback",
+                                                         "title": "+1",
+                                                          "payload": "like"
                                                     }
                                                 ]
                                             },
@@ -84,6 +94,11 @@ function processEvent(event) {
                                                 "buttons": [
                                                     {
                                                         "type": "element_share"
+                                                    },
+                                                     {
+                                                         "type": "postback",
+                                                         "title": "+1",
+                                                          "payload": "like"
                                                     }
                                                 ]
                                             }
