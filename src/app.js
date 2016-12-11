@@ -64,9 +64,15 @@ function processEvent(event) {
                                                 "image_url": body.results[0]["imageUrl"],
                                                 "buttons": [
                                                     {
+                                                        "type": "element_share"
+
+
+                                                    },
+                                                    {
                                                         "type": "postback",
-                                                        "title": "show near by issues",
-                                                        "payload": "show near by issues"
+                                                        "title": "+1",
+                                                        "payload": "like"
+
                                                     }
                                                 ]
                                             },
@@ -76,9 +82,13 @@ function processEvent(event) {
                                                 "image_url": body.results[1]["imageUrl"],
                                                 "buttons": [
                                                     {
+                                                        "type": "element_share"
+                                                    },
+                                                    {
                                                         "type": "postback",
-                                                        "title": "show near by issues",
-                                                        "payload": "show near by issues"
+                                                        "title": "+1",
+                                                        "payload": "like"
+
                                                     }
                                                 ]
                                             },
@@ -88,9 +98,15 @@ function processEvent(event) {
                                                 "image_url": body.results[2]["imageUrl"],
                                                 "buttons": [
                                                     {
+                                                        "type": "element_share"
+
+
+                                                    },
+                                                    {
                                                         "type": "postback",
-                                                        "title": "show near by issues",
-                                                        "payload": "show near by issues"
+                                                        "title": "+1",
+                                                        "payload": "like"
+
                                                     }
                                                 ]
                                             }
