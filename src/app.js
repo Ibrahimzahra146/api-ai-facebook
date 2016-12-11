@@ -66,7 +66,7 @@ function processEvent(event) {
                                                     {
                                                         "type": "postback",
                                                         "title": "show near by issues",
-                                                        "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                                                        "payload": "show near by issues"
                                                     }
                                                 ]
                                             },
@@ -78,7 +78,7 @@ function processEvent(event) {
                                                     {
                                                         "type": "postback",
                                                         "title": "show near by issues",
-                                                        "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                                                        "payload": "show near by issues"
                                                     }
                                                 ]
                                             },
@@ -90,7 +90,7 @@ function processEvent(event) {
                                                     {
                                                         "type": "postback",
                                                         "title": "show near by issues",
-                                                        "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                                                        "payload": "show near by issues"
                                                     }
                                                 ]
                                             }
