@@ -54,8 +54,8 @@ function processEvent(event) {
                                 "attachment": {
                                     "type": "template",
                                     "payload": {
-                                        "template_type": "list",
-                                        "top_element_style": "compact",
+                                        "template_type": "generic",
+
                                         "elements": [
                                             {
                                                 "title": body.results[0]["userName"],
@@ -64,6 +64,13 @@ function processEvent(event) {
                                                 "buttons": [
                                                     {
                                                         "type": "element_share"
+                                                    },
+                                                    {
+
+                                                        "type": "postback",
+                                                        "title": "+1",
+                                                        "payload": "like"
+
                                                     }
                                                 ]
                                             },
@@ -74,6 +81,13 @@ function processEvent(event) {
                                                 "buttons": [
                                                     {
                                                         "type": "element_share"
+                                                    },
+                                                    {
+
+                                                        "type": "postback",
+                                                        "title": "+1",
+                                                        "payload": "like"
+
                                                     }
                                                 ]
                                             },
@@ -84,6 +98,13 @@ function processEvent(event) {
                                                 "buttons": [
                                                     {
                                                         "type": "element_share"
+                                                    },
+                                                    {
+
+                                                        "type": "postback",
+                                                        "title": "+1",
+                                                        "payload": "like"
+
                                                     }
                                                 ]
                                             }
@@ -135,7 +156,7 @@ function processEvent(event) {
                     var splittedText = splitResponse(responseText);
 
                     async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, { text: textPart}, callback);
+                        sendFBMessage(sender, { text: textPart }, callback);
                     });
                 }
 
