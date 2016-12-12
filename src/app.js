@@ -51,32 +51,100 @@ function processEvent(event) {
                         if (!error && response.statusCode === 200) {
 
                             var text12 = {
-                                "setting_type": "call_to_actions",
-                                "thread_state": "existing_thread",
-                                "call_to_actions": [
-                                    {
-                                        "type": "postback",
-                                        "title": "Help",
-                                        "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
-                                    },
-                                    {
-                                        "type": "postback",
-                                        "title": "Start a New Order",
-                                        "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_START_ORDER"
-                                    },
-                                    {
-                                        "type": "web_url",
-                                        "title": "Checkout",
-                                        "url": "http://petersapparel.parseapp.com/checkout",
-                                        "webview_height_ratio": "full",
-                                        "messenger_extensions": true
-                                    },
-                                    {
-                                        "type": "web_url",
-                                        "title": "View Website",
-                                        "url": "http://petersapparel.parseapp.com/"
+                                "attachment": {
+                                    "type": "template",
+                                    "payload": {
+                                        "template_type": "generic",
+
+                                        "elements": [
+                                            {
+                                                "title": body.results[0]["userName"],
+                                                "subtitle": "near you",
+                                                "image_url": body.results[0]["imageUrl"],
+                                                "buttons": [
+                                                    {
+                                                        "type": "element_share"
+                                                    },
+                                                    {
+
+                                                        "type": "postback",
+                                                        "title": "+1",
+                                                        "payload": "like"
+
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "title": body.results[1]["userName"],
+                                                "subtitle": "The local area is due for record thunderstorms over the weekend.",
+                                                "image_url": body.results[1]["imageUrl"],
+                                                "buttons": [
+                                                    {
+                                                        "type": "element_share"
+                                                    },
+                                                    {
+
+                                                        "type": "postback",
+                                                        "title": "+1",
+                                                        "payload": "like"
+
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "title": body.results[2]["userName"],
+                                                "subtitle": "The local area is due for record thunderstorms over the weekend.",
+                                                "image_url": body.results[2]["imageUrl"],
+                                                "buttons": [
+                                                    {
+                                                        "type": "element_share"
+                                                    },
+                                                    {
+
+                                                        "type": "postback",
+                                                        "title": "+1",
+                                                        "payload": "like"
+
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "title": body.results[3]["userName"],
+                                                "subtitle": "near you",
+                                                "image_url": body.results[3]["imageUrl"],
+                                                "buttons": [
+                                                    {
+                                                        "type": "element_share"
+                                                    },
+                                                    {
+
+                                                        "type": "postback",
+                                                        "title": "+1",
+                                                        "payload": "like"
+
+                                                    }
+                                                ]
+                                            },
+                                             {
+                                                "title": body.results[4]["userName"],
+                                                "subtitle": "near you",
+                                                "image_url": body.results[4]["imageUrl"],
+                                                "buttons": [
+                                                    {
+                                                        "type": "element_share"
+                                                    },
+                                                    {
+
+                                                        "type": "postback",
+                                                        "title": "+1",
+                                                        "payload": "like"
+
+                                                    }
+                                                ]
+                                            }
+                                        ]
                                     }
-                                ]
+                                }
                             };
                             var stringfy = JSON.stringify(text12);
                             var obj1 = JSON.parse(stringfy);
