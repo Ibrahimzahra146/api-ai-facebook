@@ -107,6 +107,40 @@ function processEvent(event) {
 
                                                     }
                                                 ]
+                                            },
+                                            {
+                                                "title": body.results[3]["userName"],
+                                                "subtitle": "near you",
+                                                "image_url": body.results[3]["imageUrl"],
+                                                "buttons": [
+                                                    {
+                                                        "type": "element_share"
+                                                    },
+                                                    {
+
+                                                        "type": "postback",
+                                                        "title": "+1",
+                                                        "payload": "like"
+
+                                                    }
+                                                ]
+                                            },
+                                             {
+                                                "title": body.results[4]["userName"],
+                                                "subtitle": "near you",
+                                                "image_url": body.results[4]["imageUrl"],
+                                                "buttons": [
+                                                    {
+                                                        "type": "element_share"
+                                                    },
+                                                    {
+
+                                                        "type": "postback",
+                                                        "title": "+1",
+                                                        "payload": "like"
+
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }
