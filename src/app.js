@@ -163,8 +163,8 @@ function processEvent(event) {
                         "attachment": {
                             "type": "template",
                             "payload": {
-                                "template_type": "generic",
-                                "text": "select one choice",
+                                "template_type": "button",
+                                "text": "pick one choice",
                                 "buttons": [
                                     {
                                         "type": "postback",
