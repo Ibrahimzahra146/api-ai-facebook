@@ -125,7 +125,7 @@ function processEvent(event) {
                                                     }
                                                 ]
                                             },
-                                             {
+                                            {
                                                 "title": body.results[4]["userName"],
                                                 "subtitle": "near you",
                                                 "image_url": body.results[4]["imageUrl"],
@@ -156,6 +156,48 @@ function processEvent(event) {
 
                             });
                         }
+                    });
+                }
+                else if (responseText == "getStarted") {
+                    var text12 = {
+                        "attachment": {
+                            "type": "template",
+                            "payload": {
+                                "template_type": "button",
+                                "text": "select one choise",
+                                "buttons": [
+                                    {
+                                        "type": "postback",
+                                        "title": "Show nearby issues",
+                                        "payload": "show near by issues"
+                                    },
+                                    {
+                                        "type": "postback",
+                                        "title": "Show most voted nearby issue",
+                                        "payload": "show most voted near by issues"
+                                    },
+                                    {
+                                        "type": "postback",
+                                        "title": "Show newest nearby issue",
+                                        "payload": "show newest near by issues"
+                                    },
+                                    {
+                                        "type": "postback",
+                                        "title": "Report new issue",
+                                        "payload": "report new issue"
+                                    }
+                                ]
+                            }
+                        }
+                    };
+                    var stringfy = JSON.stringify(text12);
+                    var obj1 = JSON.parse(stringfy);
+                    var splittedText1 = splitResponse("I am at the beginning");
+
+                    async.eachSeries(splittedText1, (textPart, callback) => {
+                        sendFBMessage(sender, obj1, callback);
+
+
                     });
                 }
 
