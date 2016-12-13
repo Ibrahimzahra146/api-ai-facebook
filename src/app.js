@@ -164,30 +164,22 @@ function processEvent(event) {
                             "type": "template",
                             "payload": {
                                 "template_type": "generic",
-                                "elements": [
+                                "text": "select one choise",
+                                "buttons": [
                                     {
-                                        "buttons": [
-                                            {
-                                                "type": "postback",
-                                                "title": "Show nearby issues",
-                                                "payload": "show near by issues"
-                                            },
-                                            {
-                                                "type": "postback",
-                                                "title": "Show most voted nearby issue",
-                                                "payload": "show most voted near by issues"
-                                            },
-                                            {
-                                                "type": "postback",
-                                                "title": "Show newest nearby issue",
-                                                "payload": "show newest near by issues"
-                                            },
-                                             {
-                                                "type": "postback",
-                                                "title": "Report new issue",
-                                                "payload": "report new issue"
-                                            }
-                                        ]
+                                        "type": "postback",
+                                        "title": "Show nearby issues",
+                                        "payload": "show near by issues"
+                                    },
+                                    {
+                                        "type": "postback",
+                                        "title": "Show most voted nearby issue",
+                                        "payload": "show most voted near by issues"
+                                    },
+                                    {
+                                        "type": "postback",
+                                        "title": "Show newest nearby issue",
+                                        "payload": "show newest near by issues"
                                     }
                                 ]
                             }
