@@ -164,7 +164,7 @@ function processEvent(event) {
                             "type": "template",
                             "payload": {
                                 "template_type": "generic",
-                                "text": "select one choise",
+                                "text": "select one choice",
                                 "buttons": [
                                     {
                                         "type": "postback",
