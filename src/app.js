@@ -180,11 +180,6 @@ function processEvent(event) {
                                         "type": "postback",
                                         "title": "Show newest nearby issue",
                                         "payload": "show newest near by issues"
-                                    },
-                                    {
-                                        "type": "postback",
-                                        "title": "Report new issue",
-                                        "payload": "report new issue"
                                     }
                                 ]
                             }
