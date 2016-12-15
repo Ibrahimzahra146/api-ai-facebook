@@ -21,11 +21,41 @@ const sessionIds = new Map();
 function processEvent(event) {
     var sender = event.sender.id.toString();
     try {
-        var imageU=event.message.attachments[0].payload.url;
-        var splittedText = "hiii";
+        var imageU = event.message.attachments[0].payload.url;
+        var text12 = {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text": "Specify the type of the issue",
+                    "buttons": [
+                        {
+                            "type": "postback",
+                            "title": "Dangerous",
+                            "payload": "Dangerous"
+                        },
+                        {
+                            "type": "postback",
+                            "title": "Wrong",
+                            "payload": "Wrong"
+                        },
+                        {
+                            "type": "postback",
+                            "title": "Not Nice",
+                            "payload": "not nice"
+                        }
+                    ]
+                }
+            }
+        };
+        var stringfy = JSON.stringify(text12);
+        var obj1 = JSON.parse(stringfy);
+        var splittedText1 = splitResponse("I am at the beginning");
 
-        async.eachSeries(splittedText, (textPart, callback) => {
-            sendFBMessage(sender, { text: "hii123" + imageU }, callback);
+        async.eachSeries(splittedText1, (textPart, callback) => {
+            sendFBMessage(sender, obj1, callback);
+
+
         });
     }
     catch (e) {
@@ -187,6 +217,43 @@ function processEvent(event) {
                         async.eachSeries(splittedText, (textPart, callback) => {
                             sendFBMessage(sender, { text: "I am found" + sender }, callback);
                         });
+
+                    });
+                }
+                else if (responseText == "howBad") {
+                    var text12 = {
+                        "attachment": {
+                            "type": "template",
+                            "payload": {
+                                "template_type": "button",
+                                "text": "How bad",
+                                "buttons": [
+                                    {
+                                        "type": "postback",
+                                        "title": "Low",
+                                        "payload": "Low"
+                                    },
+                                    {
+                                        "type": "postback",
+                                        "title": "Intermidiate",
+                                        "payload": "intermediate"
+                                    },
+                                    {
+                                        "type": "postback",
+                                        "title": "Extreme",
+                                        "payload": "Extreme"
+                                    }
+                                ]
+                            }
+                        }
+                    };
+                    var stringfy = JSON.stringify(text12);
+                    var obj1 = JSON.parse(stringfy);
+                    var splittedText1 = splitResponse("I am at the beginning");
+
+                    async.eachSeries(splittedText1, (textPart, callback) => {
+                        sendFBMessage(sender, obj1, callback);
+
 
                     });
                 }
