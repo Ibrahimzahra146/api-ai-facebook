@@ -21,7 +21,7 @@ const sessionIds = new Map();
 function processEvent(event) {
     var sender = event.sender.id.toString();
     if (event.message.attachments[0].payload.url) {
-
+            var splittedText="hiii";
 
         async.eachSeries(splittedText, (textPart, callback) => {
             sendFBMessage(sender, { text: "hiii" + event.message.attachments[0].payload.url }, callback);
