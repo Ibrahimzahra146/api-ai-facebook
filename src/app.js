@@ -159,7 +159,25 @@ function processEvent(event) {
                         }
                     });
                 }
-               
+                else if (responseText == "openCamera") {
+                    user.findOne({ username: sender }).then(function (u) {
+                        if (u == "undefined") {
+                            user.insert({ username: sender }).then(function (u) {
+
+                            });
+
+                        }
+                    });
+                    user.findOne({ username: sender }).then(function (u) {
+                        var splittedText = splitResponse(responseText);
+
+                        async.eachSeries(splittedText, (textPart, callback) => {
+                            sendFBMessage(sender, { text: "I am found"+sender }, callback);
+                        });
+
+                    });
+                }
+
                 else if (responseText == "getStarted") {
                     var text12 = {
                         "attachment": {
