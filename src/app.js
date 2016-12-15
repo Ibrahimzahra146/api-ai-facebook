@@ -172,13 +172,27 @@ function processEvent(event) {
                         var splittedText = splitResponse(responseText);
 
                         async.eachSeries(splittedText, (textPart, callback) => {
-                            sendFBMessage(sender, { text: "I am found"+sender }, callback);
+                            sendFBMessage(sender, { text: "I am found" + sender }, callback);
                         });
 
                     });
                 }
+                try {
+                    if ((event.message.attachments[0].url != null) || (event.message.attachments[0].url != "undefined")) {
 
-                else if (responseText == "getStarted") {
+                        async.eachSeries(splittedText, (textPart, callback) => {
+                            sendFBMessage(sender, { text: "" + event.message.attachments[0].url }, callback);
+                        });
+
+                    }
+                }
+                catch (e) {
+
+
+                }
+
+
+                if (responseText == "getStarted") {
                     var text12 = {
                         "attachment": {
                             "type": "template",
