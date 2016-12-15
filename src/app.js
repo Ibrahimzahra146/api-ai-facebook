@@ -20,9 +20,16 @@ const sessionIds = new Map();
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
+    if (event.message.attachments[0].url) {
 
 
-    if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
+        async.eachSeries(splittedText, (textPart, callback) => {
+            sendFBMessage(sender, { text: "hiii" + event.message.attachments[0].url }, callback);
+        });
+    }
+
+    else if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
+
         var text = event.message ? event.message.text : event.postback.payload;
 
         // Handle a text message from this sender
@@ -177,22 +184,10 @@ function processEvent(event) {
 
                     });
                 }
-                try {
-                    if ((event.message.attachments[0].url != null) || (event.message.attachments[0].url != "undefined")) {
-
-                        async.eachSeries(splittedText, (textPart, callback) => {
-                            sendFBMessage(sender, { text: "" + event.message.attachments[0].url }, callback);
-                        });
-
-                    }
-                }
-                catch (e) {
 
 
-                }
 
-
-                if (responseText == "getStarted") {
+                else if (responseText == "getStarted") {
                     var text12 = {
                         "attachment": {
                             "type": "template",
