@@ -1,7 +1,7 @@
 'use strict';
 
-var db = require('node-localdb');
-var user = db('user.json');
+//var db = require('node-localdb');
+//var user = db('user.json');
 const apiai = require('apiai');
 const express = require('express');
 const bodyParser = require('body-parser');
