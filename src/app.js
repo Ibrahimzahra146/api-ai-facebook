@@ -1,7 +1,4 @@
 'use strict';
-
-//var db = require('node-localdb');
-//var user = db('user.json');
 const apiai = require('apiai');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -20,7 +17,6 @@ const apiAiService = apiai(APIAI_ACCESS_TOKEN, { language: APIAI_LANG, requestSo
 const sessionIds = new Map();
 
 function processEvent(event) {
-    var flag = "true";
     var sender = event.sender.id.toString();
 
 
@@ -161,14 +157,7 @@ function processEvent(event) {
                         }
                     });
                 }
-                else if (responseText == "openCamera") {
-
-                    var splittedText = splitResponse(responseText);
-
-                    async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, { text: textPart + " Id yes:" + sender }, callback);
-                    });
-                }
+               
                 else if (responseText == "getStarted") {
                     var text12 = {
                         "attachment": {
