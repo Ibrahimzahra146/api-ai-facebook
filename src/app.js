@@ -20,15 +20,21 @@ const sessionIds = new Map();
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
-    if (event.message.attachments[0].payload.url) {
-            var splittedText="hiii";
+    try {
+        var imageU=event.message.attachments[0].payload.url;
+        var splittedText = "hiii";
 
         async.eachSeries(splittedText, (textPart, callback) => {
-            sendFBMessage(sender, { text: "hiii" + event.message.attachments[0].payload.url }, callback);
+            sendFBMessage(sender, { text: "hii123" + imageU }, callback);
         });
     }
+    catch (e) {
 
-    else if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
+    }
+
+
+
+    if ((event.message && event.message.text) || (event.postback && event.postback.payload)) {
 
         var text = event.message ? event.message.text : event.postback.payload;
 
