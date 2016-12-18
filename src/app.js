@@ -8,8 +8,6 @@ const uuid = require('node-uuid');
 const request = require('request');
 const JSONbig = require('json-bigint');
 const async = require('async');
-var pg = require('pg');
-
 
 const REST_PORT = (process.env.PORT || 5000);
 const APIAI_ACCESS_TOKEN = process.env.APIAI_ACCESS_TOKEN;
@@ -59,38 +57,6 @@ function processEvent(event) {
 
 
         });
-        pg.defaults.ssl = true;
-        var flag = "false";
-        try {
-            pg.connect("postgres://mhseecncffyolg:dfd2ece0f97e0306dc87be2d48e122f673e075829be1a8fbb115df54efecf8e8@ec2-54-235-181-120.compute-1.amazonaws.com:5432/d5uvb1ie8hdpbf", function (err, client) {
-                if (err) throw err;
-                console.log('Connected to postgres! Getting schemas...');
-                client
-                    .query("SELECT * FROM Session where fId=" + sender + ";")
-                    .on('row', function (row) {
-                        flag = "true";
-
-                        console.log(JSON.parse(JSON.stringify(row)).imageurl);
-                    });
-                if (flag == "true") {
-                    client
-                        .query("INSERT INTO Session(fId ,imageUrl ,issueType , howBad) VALUES ('" + sender + "','facebook','dangerous','extreme');");
-                }
-                else {
-                    client
-                        .query("INSERT INTO Session(fId ,imageUrl ,issueType , howBad) VALUES ('" + sender + "','facebook','dangerous','extreme');");
-                }
-            });
-        }
-        catch (e) {
-
-        }
-        client
-            .query("SELECT * FROM Session where fId='Ibrahim';")
-            .on('row', function (row) {
-
-                console.log(JSON.parse(JSON.stringify(row)).imageurl);
-            });
     }
     catch (e) {
 
@@ -237,15 +203,22 @@ function processEvent(event) {
                     });
                 }
                 else if (responseText == "openCamera") {
+                    user.findOne({ username: sender }).then(function (u) {
+                        if (u == "undefined") {
+                            user.insert({ username: sender }).then(function (u) {
 
+                            });
 
-                    var splittedText = splitResponse(responseText);
-
-                    async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, { text: "Open camera or upload an image" }, callback);
+                        }
                     });
+                    user.findOne({ username: sender }).then(function (u) {
+                        var splittedText = splitResponse(responseText);
 
+                        async.eachSeries(splittedText, (textPart, callback) => {
+                            sendFBMessage(sender, { text: "Please Open camera or upload an image" }, callback);
+                        });
 
+                    });
                 }
                 else if (responseText == "howBad") {
                     var text12 = {
